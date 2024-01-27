@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DIYCraftsAndProjectsMVC.Tests
 {
-    public class UserScoreTests
+    public class UserScoreTests : IUserTest
     {
         [Fact]
-        public void TestUserScoreProperties()
+        public void TestProperties()
         {
             // Arrange
             var mockUser = new Mock<User>();

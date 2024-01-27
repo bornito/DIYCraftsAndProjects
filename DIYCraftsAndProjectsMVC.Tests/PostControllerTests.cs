@@ -8,27 +8,6 @@ namespace DIYCraftsAndProjectsMVC.Tests
 {
     public class PostControllerTests
     {
-        // test index metode
-
-        //[Fact]
-        //public async Task Index_ReturnsAViewResult_WithAListOfPosts()
-        //{
-        //    // Arrange
-        //    var mockContext = new Mock<CraftsAndProjectsDbContext>();
-        //    mockContext.Setup(ctx => ctx.Posts.Include(p => p.User))
-        //        .Returns((Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Post, User>) // eksplicitni kast
-        //        new List<Post> { new Post(), new Post() }.AsQueryable());
-
-        //    var controller = new PostsController(mockContext.Object);
-
-        //    // Act
-        //    var result = await controller.Index();
-
-        //    // Assert
-        //    var viewResult = Assert.IsType<ViewResult>(result);
-        //    var model = Assert.IsAssignableFrom<IEnumerable<Post>>(viewResult.ViewData.Model);
-        //    Assert.Equal(2, model.Count());
-        //}
 
         // details kada za id dobije null
 

@@ -6,35 +6,35 @@ using System.Threading.Tasks;
 
 namespace DIYCraftsAndProjectsMVC.Tests
 {
-    public class UserFolowUserTests
+    public class UserFolowUserTests : IUserTest
     {
-            [Fact]
-            public void TestUserFollowUserProperties()
+        [Fact]
+        public void TestProperties()
+        {
+            // Arrange
+            var mockUser = new Mock<User>();
+            var userFollowUser = new UserFollowUser
             {
-                // Arrange
-                var mockUser = new Mock<User>();
-                var userFollowUser = new UserFollowUser
-                {
-                    IdUserFollowUser = 1,
-                    UserFollowingId = 2,
-                    UserFollowedId = 3,
-                    UserFollowed = mockUser.Object,
-                    UserFollowing = mockUser.Object
-                };
+                IdUserFollowUser = 1,
+                UserFollowingId = 2,
+                UserFollowedId = 3,
+                UserFollowed = mockUser.Object,
+                UserFollowing = mockUser.Object
+            };
 
-                // Act
-                var idUserFollowUser = userFollowUser.IdUserFollowUser;
-                var userFollowingId = userFollowUser.UserFollowingId;
-                var userFollowedId = userFollowUser.UserFollowedId;
-                var userFollowed = userFollowUser.UserFollowed;
-                var userFollowing = userFollowUser.UserFollowing;
+            // Act
+            var idUserFollowUser = userFollowUser.IdUserFollowUser;
+            var userFollowingId = userFollowUser.UserFollowingId;
+            var userFollowedId = userFollowUser.UserFollowedId;
+            var userFollowed = userFollowUser.UserFollowed;
+            var userFollowing = userFollowUser.UserFollowing;
 
-                // Assert
-                Assert.Equal(1, idUserFollowUser);
-                Assert.Equal(2, userFollowingId);
-                Assert.Equal(3, userFollowedId);
-                Assert.Equal(mockUser.Object, userFollowed);
-                Assert.Equal(mockUser.Object, userFollowing);
-            }
+            // Assert
+            Assert.Equal(1, idUserFollowUser);
+            Assert.Equal(2, userFollowingId);
+            Assert.Equal(3, userFollowedId);
+            Assert.Equal(mockUser.Object, userFollowed);
+            Assert.Equal(mockUser.Object, userFollowing);
+        }
     }
 }

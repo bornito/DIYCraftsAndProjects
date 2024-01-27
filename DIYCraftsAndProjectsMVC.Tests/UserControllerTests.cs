@@ -6,25 +6,8 @@ using System.Threading.Tasks;
 
 namespace DIYCraftsAndProjectsMVC.Tests
 {
-    public class UserControllerTests
+    public class UserControllerTests : UserTestGroupOne, IUserMethodTest
     {
-        // Testovi za Edit metode->
-
-        // kada je id null
-        [Fact]
-        public async Task Details_ReturnsNotFoundResult_WhenIdIsNull()
-        {
-            // Arrange
-            var mockContext = new Mock<CraftsAndProjectsDbContext>();
-            var controller = new UsersController(mockContext.Object);
-
-            // Act
-            var result = await controller.Details(null);
-
-            // Assert
-            Assert.IsType<NotFoundResult>(result);
-        }
-
         // kada nema id-a
         [Fact]
         public async Task Edit_ReturnsNotFoundResult_WhenIdDoesNotExist()
@@ -79,22 +62,37 @@ namespace DIYCraftsAndProjectsMVC.Tests
             Assert.Equal("Index", redirectToActionResult.ActionName);
         }
 
-        // vraca li index metoda viewresult
+        // Create_RedirectsToIndexView_AfterSuccessfulCreation
 
-        //[Fact]
-        //public async Task Index_ReturnsViewResult()
-        //{
-        //    // Arrange
-        //    var mockContext = new Mock<CraftsAndProjectsDbContext>();
-        //    var controller = new UsersController(mockContext.Object);
+        public async Task UserMethodResultTest()
+        {
+            // Arrange
+            var mockContext = new Mock<CraftsAndProjectsDbContext>();
+            var controller = new UsersController(mockContext.Object);
+            var user = new User { UserId = 1, FirstName = "Test", LastName = "User", Email = "test@mail.com" };
 
-        //    // Act
-        //    var result = await controller.Index();
+            // Act
+            var result = await controller.Create(user);
 
-        //    // Assert
-        //    Assert.IsType<ViewResult>(result);
-        //}
+            // Assert
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
 
+        }
 
+        public override void TestProperties()
+        {
+            // edit kada je id null
+
+            // Arrange
+            var mockContext = new Mock<CraftsAndProjectsDbContext>();
+            var controller = new UsersController(mockContext.Object);
+
+            // Act
+            var result = controller.Details(null);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
     }
 }

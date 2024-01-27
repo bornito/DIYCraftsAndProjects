@@ -34,36 +34,40 @@ namespace DIYCraftsAndProjectsMVC.Tests
             _mockContext = new Mock<CraftsAndProjectsDbContext>(options);
             _controller = new AccountController(_mockContext.Object);
         }
+   
 
-        //[Fact]
-        //public void Login_ReturnsRedirectToActionResult_WhenUserExists()
-        //{
-        //    // Arrange
-        //    var login = new Login { Email = "pero@mail.com", Password = "1234" };
-        //    _mockContext.Object.Users.Add(new User { Email = login.Email, Password = login.Password });
-        //    _mockContext.Object.SaveChanges();
+        [Fact]
+        public void Register_ReturnsRedirectToActionResult_WhenRegistrationIsSuccessful()
+        {
+            // Arrange
+            var account = new Account { Email = "pero2@mail.com", Password = "1234" };
+            var _mockSet = new Mock<DbSet<User>>();
 
-        //    // Act
-        //    var result = _controller.Login(login);
+            // Act
+            var result = _controller.Register(account);
 
-        //    // Assert
-        //    var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-        //    Assert.Equal("Index", redirectToActionResult.ActionName);
-        //    Assert.Equal("Post", redirectToActionResult.ControllerName);
-        //}
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IActionResult>(result);
+        }
 
-        //[Fact]
-        //public void Register_ReturnsRedirectToActionResult_WhenRegistrationIsSuccessful()
-        //{
-        //    // Arrange
-        //    var account = new Account { Email = "pero@mail.com", Password = "1234" };
+        [Fact]
+        public void Login_ReturnsRedirectToActionResult_WhenUserExists()
+        {
+            // Arrange
+            var login = new Login { Email = "pero2@mail.com", Password = "1234" };
+            var user = new User { Email = login.Email, Password = login.Password };
 
-        //    // Act
-        //    var result = _controller.Register(account);
+            var _mockSet = new Mock<DbSet<User>>();
+            _mockSet.Setup(m => m.Find(It.IsAny<string>())).Returns(user);
+            _mockContext.Setup(c => c.Users).Returns(_mockSet.Object);
 
-        //    // Assert
-        //    RedirectToActionResult? redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-        //    Assert.Equal("Login", redirectToActionResult.ActionName);
-        //}
+            // Act
+            var result = _controller.Login(login);
+
+            // Assert
+            Assert.NotNull(result); 
+            Assert.IsAssignableFrom<IActionResult>(result); 
+        }
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace DIYCraftsAndProjectsMVC.Tests
 {
-    public class UserTests
+    public class UserTests : UserTestGroupOne
     {
-        // testiramo first name, last name i email
         [Fact]
-        public void User_CreatesNewUser_SetsPropertiesCorrectly()
+        public override void TestProperties()
         {
+            // testiramo first name, last name i email
+
             // Arrange
             var userId = 1;
             var firstName = "Test";
@@ -32,42 +33,35 @@ namespace DIYCraftsAndProjectsMVC.Tests
             Assert.Equal(firstName, user.FirstName);
             Assert.Equal(lastName, user.LastName);
             Assert.Equal(email, user.Email);
-        }
 
-        // datum rodjenja
+            // datum rodjenja
 
-        [Fact]
-        public void User_CreatesNewUser_SetsDateOfBirthCorrectly()
-        {
             // Arrange
             var dateOfBirth = new DateTime(1990, 1, 1);
 
             // Act
-            var user = new User
+            var user2 = new User
             {
                 DateOfBirth = dateOfBirth
             };
 
             // Assert
-            Assert.Equal(dateOfBirth, user.DateOfBirth);
-        }
+            Assert.Equal(dateOfBirth, user2.DateOfBirth);
 
-        // aktivnost
+            // aktivnost
 
-        [Fact]
-        public void User_CreatesNewUser_SetsIsActiveCorrectly()
-        {
             // Arrange
             var isActive = true;
 
             // Act
-            var user = new User
+            var user3 = new User
             {
                 IsActive = isActive
             };
 
             // Assert
-            Assert.Equal(isActive, user.IsActive);
+            Assert.Equal(isActive, user3.IsActive);
+
         }
     }
 }
