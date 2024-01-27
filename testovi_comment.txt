@@ -1,0 +1,112 @@
+  POSTCONTROLERTESTS
+
+      // test index metode
+
+        [Fact]
+        public async Task Index_ReturnsAViewResult_WithAListOfPosts()
+        {
+            // Arrange
+            var mockContext = new Mock<CraftsAndProjectsDbContext>();
+            mockContext.Setup(ctx => ctx.Posts.Include(p => p.User))
+                .Returns((Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Post, User>) // eksplicitni kast
+                new List<Post> { new Post(), new Post() }.AsQueryable());
+
+            var controller = new PostsController(mockContext.Object);
+
+            // Act
+            var result = await controller.Index();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsAssignableFrom<IEnumerable<Post>>(viewResult.ViewData.Model);
+            //Assert.Equal(2, model.Count());
+
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IActionResult>(result);
+        }
+
+
+
+CraftsAndProjectsDbContextTests.cs
+
+        // testiramo setiranje DbSets-a u dbContextu za komentare, drzave i notifikacije
+
+        //[Fact]
+        //public void Test_CommentsDbSet()
+        //{
+        //    // Arrange
+        //    var mockSet = new Mock<DbSet<Comment>>();
+        //    var mockContext = new Mock<CraftsAndProjectsDbContext>();
+
+        //    // Act
+        //    mockContext.Setup(m => m.Comments).Returns(mockSet.Object);
+
+        //    // Assert
+        //    Assert.Equal(mockSet.Object, mockContext.Object.Comments);
+        //}
+
+        //[Fact]
+        //public void Test_CountriesDbSet()
+        //{
+        //    // Arrange
+        //    var mockSet = new Mock<DbSet<Country>>();
+        //    var mockContext = new Mock<CraftsAndProjectsDbContext>();
+
+        //    // Act
+        //    mockContext.Setup(m => m.Countries).Returns(mockSet.Object);
+
+        //    // Assert
+        //    Assert.Equal(mockSet.Object, mockContext.Object.Countries);
+        //}
+
+        //[Fact]
+        //public void Test_NotificationsDbSet()
+        //{
+        //    // Arrange
+        //    var mockSet = new Mock<DbSet<Notification>>();
+        //    var mockContext = new Mock<CraftsAndProjectsDbContext>();
+
+        //    // Act
+        //    mockContext.Setup(m => m.Notifications).Returns(mockSet.Object);
+
+        //    // Assert
+        //    Assert.Equal(mockSet.Object, mockContext.Object.Notifications);
+        //}
+
+
+UserControllerTests
+
+        // vraca li index metoda viewresult
+
+        //[Fact]
+        //public async Task Index_ReturnsViewResult()
+        //{
+        //    // Arrange
+        //    var mockContext = new Mock<CraftsAndProjectsDbContext>();
+        //    var controller = new UsersController(mockContext.Object);
+
+        //    // Act
+        //    var result = await controller.Index();
+
+        //    // Assert
+        //    Assert.IsType<ViewResult>(result);
+        //}
+
+strpao u drugu metodu
+
+        // Testovi za Edit metode->
+
+        // kada je id null
+        [Fact]
+        public async Task Details_ReturnsNotFoundResult_WhenIdIsNull()
+        {
+            // Arrange
+            var mockContext = new Mock<CraftsAndProjectsDbContext>();
+            var controller = new UsersController(mockContext.Object);
+
+            // Act
+            var result = await controller.Details(null);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
